@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArbiCalc Pro</title>
+    <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="logo">
+            <span data-lang="appName">ArbiCalc Pro</span>
+        </div>
+        <ul class="nav-links">
+            <li class="active">
+                <i class="fas fa-calculator"></i>
+                <span data-lang="nav.calculator">Калькулятор</span>
+            </li>
+            <li>
+                <i class="fas fa-chart-line"></i>
+                <span data-lang="nav.analytics">Аналитика</span>
+            </li>
+            <li>
+                <i class="fas fa-book"></i>
+                <span data-lang="nav.education">Обучение</span>
+            </li>
+            <li>
+                <i class="fas fa-cog"></i>
+                <span data-lang="nav.settings">Настройки</span>
+            </li>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="sidebar-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+
+        <div class="language-toggle">
+            <select id="languageSelect" class="language-select">
+                <option value="ru">🇷🇺 RU</option>
+                <option value="en">🇬🇧 EN</option>
+                <option value="cn">🇨🇳 CN</option>
+                <option value="jp">🇯🇵 JP</option>
+            </select>
+        </div>
+
+        <div class="theme-toggle">
+            <i class="fas fa-moon theme-icon" id="themeToggle"></i>
+        </div>
+
+        <div class="dashboard">
+            <section class="calculator-card">
+                <h2 data-lang="calculator.title">Калькулятор арбитража</h2>
+                <div class="calculator-grid">
+                    <div class="input-group">
+                        <label data-lang="calculator.currency">Валюта</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-globe"></i>
+                            <select id="currency">
+                                <option value="RUB" data-lang="currency.RUB">RUB - Российский рубль</option>
+                                <option value="USD" data-lang="currency.USD">USD - Доллар США</option>
+                                <option value="EUR" data-lang="currency.EUR">EUR - Евро</option>
+                                <option value="GBP" data-lang="currency.GBP">GBP - Британский фунт</option>
+                                <option value="CNY" data-lang="currency.CNY">CNY - Китайский юань</option>
+                                <option value="JPY" data-lang="currency.JPY">JPY - Японская иена</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label data-lang="calculator.investment">Сумма инвестиции</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-money-bill"></i>
+                            <input type="number" id="investment" value="15000">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label data-lang="calculator.buyPrice">Цена покупки</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-tag"></i>
+                            <input type="number" id="buyPrice" value="97">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label data-lang="calculator.sellPrice">Цена продажи</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-tags"></i>
+                            <input type="number" id="sellPrice" value="101">
+                        </div>
+                    </div>
+                </div>
+                <button class="calculate-btn" id="calculateBtn">
+                    <i class="fas fa-calculator"></i>
+                    <span data-lang="calculator.calculate">Рассчитать</span>
+                </button>
+            </section>
+
+            <section class="results-card">
+                <h2 data-lang="results.title">Результаты</h2>
+                <div class="results-grid">
+                    <div class="result-item">
+                        <div class="result-icon profit tooltip">
+                            <i class="fas fa-chart-line"></i>
+                            <span class="tooltip-text" data-lang="results.profitTooltip">Ваша чистая прибыль от сделки</span>
+                        </div>
+                        <div class="result-info">
+                            <span class="label" data-lang="results.profit">Прибыль</span>
+                            <span class="value" id="profitResult">0.00 <span class="currency-symbol">₽</span></span>
+                        </div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-icon roi tooltip">
+                            <i class="fas fa-percentage"></i>
+                            <span class="tooltip-text" data-lang="results.
+                            <span class="tooltip-text" data-lang="results.roiTooltip">Процент возврата инвестиций</span>
+                        </div>
+                        <div class="result-info">
+                            <span class="label">ROI</span>
+                            <span class="value" id="roiResult">0.00%</span>
+                        </div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-icon units tooltip">
+                            <i class="fas fa-cube"></i>
+                            <span class="tooltip-text" data-lang="results.unitsTooltip">Количество единиц товара</span>
+                        </div>
+                        <div class="result-info">
+                            <span class="label" data-lang="results.units">Количество</span>
+                            <span class="value" id="unitsResult">0.00</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="tips-card">
+                <h2 data-lang="tips.title">Советы по арбитражу</h2>
+                <div class="tips-grid">
+                    <div class="tip-item">
+                        <i class="fas fa-lightbulb"></i>
+                        <h3 data-lang="tips.marketAnalysis">Анализ рынка</h3>
+                        <p data-lang="tips.marketAnalysisDesc">Изучайте тренды и следите за новостями рынка</p>
+                    </div>
+                    <div class="tip-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3 data-lang="tips.riskManagement">Управление рисками</h3>
+                        <p data-lang="tips.riskManagementDesc">Используйте стоп-лоссы для защиты капитала</p>
+                    </div>
+                    <div class="tip-item">
+                        <i class="fas fa-clock"></i>
+                        <h3 data-lang="tips.timing">Тайминг</h3>
+                        <p data-lang="tips.timingDesc">Выбирайте оптимальное время для сделок</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    <script src="lang/ru.js"></script>
+    <script src="lang/en.js"></script>
+    <script src="lang/cn.js"></script>
+    <script src="lang/jp.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
