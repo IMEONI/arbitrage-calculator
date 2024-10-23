@@ -3,7 +3,8 @@ const en = {
     nav: {
         calculator: "Calculator",
         analytics: "Analytics", 
-        education: "Education"
+        education: "Education",
+        logout: "Logout"
     },
     calculator: {
         title: "Arbitrage Calculator",
@@ -57,6 +58,18 @@ const en = {
             description: "Master complex strategies and trading automation"
         },
         startLearning: "Start Learning"
+    },
+    login: {
+        title: "Login",
+        username: "Username",
+        password: "Password",
+        loginBtn: "Login",
+        notifications: {
+            enterCredentials: "Please enter username and password",
+            success: "Successfully logged in",
+            error: "Invalid username or password",
+            loggedOut: "Successfully logged out"
+        }
     }
 };
 window.en = en;

@@ -3,7 +3,8 @@ const ru = {
     nav: {
         calculator: "Калькулятор",
         analytics: "Аналитика",
-        education: "Обучение"
+        education: "Обучение",
+        logout: "Выход"
     },
     calculator: {
         title: "Калькулятор арбитража",
@@ -57,6 +58,18 @@ const ru = {
             description: "Освойте сложные стратегии и автоматизацию торговли"
         },
         startLearning: "Начать обучение"
+    },
+    login: {
+        title: "Вход",
+        username: "Логин",
+        password: "Пароль",
+        loginBtn: "Войти",
+        notifications: {
+            enterCredentials: "Введите логин и пароль",
+            success: "Успешный вход",
+            error: "Неверный логин или пароль",
+            loggedOut: "Вы успешно вышли из системы"
+        }
     }
 };
 window.ru = ru;

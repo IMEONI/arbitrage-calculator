@@ -3,7 +3,8 @@ const cn = {
     nav: {
         calculator: "计算器",
         analytics: "分析",
-        education: "教育"
+        education: "教育",
+        logout: "退出"
     },
     calculator: {
         title: "套利计算器",
@@ -57,6 +58,18 @@ const cn = {
             description: "掌握复杂策略和交易自动化"
         },
         startLearning: "开始学习"
+    },
+    login: {
+        title: "登录",
+        username: "用户名",
+        password: "密码",
+        loginBtn: "登录",
+        notifications: {
+            enterCredentials: "请输入用户名和密码",
+            success: "登录成功",
+            error: "用户名或密码错误",
+            loggedOut: "已成功退出"
+        }
     }
 };
 window.cn = cn;

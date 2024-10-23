@@ -1,5 +1,77 @@
+const TEST_CREDENTIALS = {
+    username: 'admin',
+    password: 'admin123'
+};
+
+function checkAuth() {
+    return localStorage.getItem('isAuthenticated') === 'true';
+}
+
+function showLoginPage() {
+    document.querySelector('.login-page').style.display = 'flex';
+    document.querySelector('.preloader').style.display = 'none';
+}
+
+function hideLoginPage() {
+    document.querySelector('.login-page').style.display = 'none';
+}
+
+function login(username, password) {
+    if (username === TEST_CREDENTIALS.username && password === TEST_CREDENTIALS.password) {
+        localStorage.setItem('isAuthenticated', 'true');
+        hideLoginPage();
+        document.querySelector('.dashboard').style.display = 'grid';
+        
+        const navLinks = document.querySelectorAll('.nav-links li');
+        navLinks.forEach(link => link.classList.remove('active'));
+        const calculatorLink = document.querySelector('.nav-links li:first-child');
+        calculatorLink.classList.add('active');
+        
+        return true;
+    }
+    return false;
+}
+
+function logout() {
+    localStorage.removeItem('isAuthenticated');
+    showLoginPage();
+    showNotification('loggedOut', 'success');
+}
+
 document.addEventListener('DOMContentLoaded', function() {
-    // Логика прелоадера
+    if (!checkAuth()) {
+        showLoginPage();
+    } else {
+        hideLoginPage();
+    }
+
+    document.getElementById('loginBtn').addEventListener('click', function() {
+        const username = document.getElementById('loginUsername').value;
+        const password = document.getElementById('loginPassword').value;
+
+        if (!username || !password) {
+            showNotification('enterCredentials', 'error');
+            return;
+        }
+
+        if (login(username, password)) {
+            showNotification('success', 'success');
+        } else {
+            showNotification('error', 'error');
+        }
+    });
+
+    const sidebarNav = document.querySelector('.nav-links');
+    const sidebarElement = document.querySelector('.sidebar');
+    const sidebarToggle = document.querySelector('.sidebar-toggle');
+    const dashboard = document.querySelector('.dashboard');
+    const analyticsDashboard = document.querySelector('.analytics-dashboard');
+    const educationDashboard = document.querySelector('.education-dashboard');
+    const navLinks = document.querySelectorAll('.nav-links li');
+    const logoutButton = document.querySelector('.nav-logout');
+
+    logoutButton.addEventListener('click', logout);
+
     if (!sessionStorage.getItem('firstLoad')) {
         const preloader = document.querySelector('.preloader');
         
@@ -11,32 +83,21 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         document.querySelector('.preloader').classList.add('hidden');
     }
-
-    // Управление боковой панелью
-    const sidebarToggle = document.querySelector('.sidebar-toggle');
-    const sidebar = document.querySelector('.sidebar');
-    const dashboard = document.querySelector('.dashboard');
-    const analyticsDashboard = document.querySelector('.analytics-dashboard');
-    const educationDashboard = document.querySelector('.education-dashboard');
-    const navLinks = document.querySelectorAll('.nav-links li');
     
     sidebarToggle.addEventListener('click', () => {
-        sidebar.classList.toggle('active');
+        sidebarElement.classList.toggle('active');
     });
     
-    // Закрытие сайдбара при клике вне его
     document.addEventListener('click', (e) => {
-        if (!sidebar.contains(e.target) && !sidebarToggle.contains(e.target)) {
-            sidebar.classList.remove('active');
+        if (!sidebarElement.contains(e.target) && !sidebarToggle.contains(e.target)) {
+            sidebarElement.classList.remove('active');
         }
     });
 
-    // Управление языком
     let currentLang = localStorage.getItem('language') || 'ru';
     const languageSelect = document.getElementById('languageSelect');
     languageSelect.value = currentLang;
 
-    // Символы валют
     const currencySymbols = {
         'RUB': '₽',
         'USD': '$',
@@ -46,12 +107,10 @@ document.addEventListener('DOMContentLoaded', function() {
         'JPY': '¥'
     };
 
-    // Контейнер для уведомлений
     const notificationContainer = document.createElement('div');
     notificationContainer.className = 'notification-container';
     document.body.appendChild(notificationContainer);
 
-    // Управление темой
     const themeToggle = document.getElementById('themeToggle');
     const icon = themeToggle;
     
@@ -62,7 +121,6 @@ document.addEventListener('DOMContentLoaded', function() {
         icon.classList.add('fa-sun');
     }
 
-    // Навигация между разделами
     navLinks.forEach(link => {
         link.addEventListener('click', function() {
             navLinks.forEach(l => l.classList.remove('active'));
@@ -83,12 +141,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             if (window.innerWidth <= 1024) {
-                sidebar.classList.remove('active');
+                sidebarElement.classList.remove('active');
             }
         });
     });
 
-    // Education buttons event listeners
     const educationButtons = document.querySelectorAll('.education-btn');
     educationButtons.forEach(button => {
         button.addEventListener('click', function() {
@@ -97,7 +154,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Переключение языка
     languageSelect.addEventListener('change', function() {
         currentLang = this.value;
         localStorage.setItem('language', currentLang);
@@ -116,9 +172,17 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             if (value) element.textContent = value;
         });
+
+        document.querySelectorAll('[data-lang-placeholder]').forEach(element => {
+            const keys = element.dataset.langPlaceholder.split('.');
+            let value = langData;
+            for (const key of keys) {
+                if (value) value = value[key];
+            }
+            if (value) element.placeholder = value;
+        });
     }
 
-    // Переключение темы
     themeToggle.addEventListener('click', function() {
         document.body.classList.toggle('dark-theme');
         if (document.body.classList.contains('dark-theme')) {
@@ -132,7 +196,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Обработка курсов валют
     let exchangeRates = {};
 
     async function fetchExchangeRates() {
@@ -141,13 +204,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const data = await response.json();
             exchangeRates = data.rates;
         } catch (error) {
-            showNotification('Ошибка при получении курсов валют');
+            showNotification('error', 'error');
         }
     }
 
     fetchExchangeRates();
 
-    // Выбор валюты
     const currencySelect = document.getElementById('currency');
     currencySelect.addEventListener('change', function() {
         const selectedCurrency = this.value;
@@ -156,7 +218,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Функционал калькулятора
     const calculateBtn = document.getElementById('calculateBtn');
     calculateBtn.addEventListener('click', async function() {
         const investment = parseFloat(document.getElementById('investment').value);
@@ -165,12 +226,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const selectedCurrency = document.getElementById('currency').value;
 
         if (isNaN(investment) || isNaN(buyPrice) || isNaN(sellPrice)) {
-            showNotification('Пожалуйста, введите корректные числовые значения');
+            showNotification('error', 'error');
             return;
         }
 
         if (investment <= 0 || buyPrice <= 0 || sellPrice <= 0) {
-            showNotification('Значения должны быть больше нуля');
+            showNotification('error', 'error');
             return;
         }
 
@@ -203,7 +264,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 150);
     }
 
-    function showNotification(message, type = 'error') {
+    function showNotification(messageKey, type = 'error') {
+        const langData = window[currentLang];
+        const message = langData.login.notifications[messageKey] || messageKey;
+        
         const notification = document.createElement('div');
         notification.className = `notification ${type}`;
         notification.innerHTML = `
@@ -213,14 +277,12 @@ document.addEventListener('DOMContentLoaded', function() {
         notificationContainer.appendChild(notification);
 
         setTimeout(() => notification.classList.add('show'), 100);
-
         setTimeout(() => {
             notification.classList.remove('show');
             setTimeout(() => notification.remove(), 300);
         }, 3000);
     }
 
-    // Обработка числовых полей ввода
     const numberInputs = document.querySelectorAll('input[type="number"]');
     numberInputs.forEach(input => {
         input.setAttribute('type', 'text');
@@ -236,6 +298,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Начальное обновление языка
+    // Add keyboard event listener for login form
+    document.getElementById('loginPassword').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            document.getElementById('loginBtn').click();
+        }
+    });
+
+    // Initialize language on page load
     updateLanguage();
 });
+

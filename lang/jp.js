@@ -3,7 +3,8 @@ const jp = {
     nav: {
         calculator: "計算機",
         analytics: "分析",
-        education: "教育"
+        education: "教育",
+        logout: "ログアウト"
     },
     calculator: {
         title: "アービトレージ計算機",
@@ -57,6 +58,18 @@ const jp = {
             description: "複雑な戦略と取引の自動化をマスター"
         },
         startLearning: "学習を開始"
+    },
+    login: {
+        title: "ログイン",
+        username: "ユーザー名",
+        password: "パスワード",
+        loginBtn: "ログイン",
+        notifications: {
+            enterCredentials: "ユーザー名とパスワードを入力してください",
+            success: "ログインに成功しました",
+            error: "ユーザー名またはパスワードが無効です",
+            loggedOut: "ログアウトしました"
+        }
     }
 };
 window.jp = jp;

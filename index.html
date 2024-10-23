@@ -10,6 +10,41 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div class="login-page">
+        <div class="login-card">
+            <div class="login-language-select">
+                <select id="languageSelect" class="language-select">
+                    <option value="ru">🇷🇺 RU</option>
+                    <option value="en">🇬🇧 EN</option>
+                    <option value="cn">🇨🇳 CN</option>
+                    <option value="jp">🇯🇵 JP</option>
+                </select>
+            </div>
+            <div class="login-logo">
+                <span data-lang="appName">ArbiCalc Pro</span>
+            </div>
+            <div class="login-form">
+                <div class="input-group">
+                    <div class="input-with-icon">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="loginUsername" data-lang-placeholder="login.username">
+                    </div>
+                </div>
+                <div class="input-group">
+                    <div class="input-with-icon">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="loginPassword" data-lang-placeholder="login.password">
+                    </div>
+                </div>
+                <button class="login-btn" id="loginBtn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span data-lang="login.loginBtn">Войти</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
     <div class="preloader">
         <div class="loader">
             <svg viewBox="0 0 80 80">
@@ -35,6 +70,10 @@
             <li>
                 <i class="fas fa-book"></i>
                 <span data-lang="nav.education">Обучение</span>
+            </li>
+            <li class="nav-logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span data-lang="nav.logout">Выход</span>
             </li>
         </ul>
         <div class="theme-toggle">
@@ -228,3 +267,4 @@
     <script src="script.js"></script>
 </body>
 </html>
+
