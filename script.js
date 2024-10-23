@@ -25,8 +25,6 @@ document.onreadystatechange = function() {
     }
 };
 
-
-// Rest of your existing code remains the same
 const TEST_CREDENTIALS = {
     username: 'admin',
     password: 'admin123'
@@ -130,7 +128,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Updated language handling
     const languageSelects = document.querySelectorAll('.language-select');
     let currentLang = localStorage.getItem('language') || 'ru';
     
@@ -202,12 +199,18 @@ document.addEventListener('DOMContentLoaded', function() {
             showNotification(message, 'info');
         });
     });
-    
 
     function updateLanguage() {
         const langData = window[currentLang];
         if (!langData) return;
         
+        // Simple language code display
+        languageSelects.forEach(select => {
+            Array.from(select.options).forEach(option => {
+                option.textContent = option.value.toUpperCase();
+            });
+        });
+
         document.querySelectorAll('[data-lang]').forEach(element => {
             const keys = element.dataset.lang.split('.');
             let value = langData;
