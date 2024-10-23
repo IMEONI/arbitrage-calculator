@@ -722,6 +722,32 @@ body.dark-theme .preloader {
     animation: pulse 1.5s ease-in-out infinite;
 }
 
+@keyframes rotate {
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes dash {
+    0% {
+        stroke-dashoffset: 200;
+    }
+    50% {
+        stroke-dashoffset: 50;
+    }
+    100% {
+        stroke-dashoffset: 200;
+    }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.preloader.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
 .login-page {
     position: fixed;
     top: 0;
@@ -806,22 +832,6 @@ body.dark-theme .login-card {
     padding: 0.8vh 1.5vh;
 }
 
-
-
-.nav-logout {
-    margin-top: auto;
-    color: #ef4444;
-}
-
-.nav-logout:hover {
-    background: rgba(239, 68, 68, 0.1);
-}
-
-body.dark-theme .nav-logout:hover {
-    background: rgba(239, 68, 68, 0.2);
-}
-
-
 @keyframes rotate {
     100% { transform: rotate(360deg); }
 }
@@ -841,11 +851,6 @@ body.dark-theme .nav-logout:hover {
 @keyframes pulse {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.5; }
-}
-
-.preloader.hidden {
-    opacity: 0;
-    visibility: hidden;
 }
 
 /*Адаптация*/

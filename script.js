@@ -34,12 +34,25 @@ function login(username, password) {
 
 function logout() {
     localStorage.removeItem('isAuthenticated');
-    localStorage.removeItem('lastVisit');
+    sessionStorage.clear();
     showLoginPage();
     showNotification('loggedOut', 'success');
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Preloader logic
+    if (!sessionStorage.getItem('firstLoad')) {
+        const preloader = document.querySelector('.preloader');
+        
+        setTimeout(() => {
+            preloader.classList.add('hidden');
+        }, 2000);
+        
+        sessionStorage.setItem('firstLoad', 'true');
+    } else {
+        document.querySelector('.preloader').classList.add('hidden');
+    }
+
     if (!checkAuth()) {
         showLoginPage();
     } else {
@@ -72,21 +85,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const logoutButton = document.querySelector('.nav-logout');
 
     logoutButton.addEventListener('click', logout);
-
-    // New preloader logic
-    const lastVisit = localStorage.getItem('lastVisit');
-    const currentTime = new Date().getTime();
-    const preloader = document.querySelector('.preloader');
-
-    if (!lastVisit || (currentTime - parseInt(lastVisit)) > 5 * 1000) { // 5 seconds
-        setTimeout(() => {
-            preloader.classList.add('hidden');
-        }, 2000);
-    } else {
-        preloader.classList.add('hidden');
-    }
-
-    localStorage.setItem('lastVisit', currentTime);
     
     sidebarToggle.addEventListener('click', () => {
         sidebarElement.classList.toggle('active');
