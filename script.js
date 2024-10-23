@@ -1,3 +1,14 @@
+document.onreadystatechange = function() {
+    const preloader = document.querySelector('.preloader');
+    if (document.readyState !== 'complete') {
+        preloader.style.display = 'flex';
+    } else {
+        setTimeout(() => {
+            preloader.classList.add('hidden');
+        }, 2000);
+    }
+};
+
 const TEST_CREDENTIALS = {
     username: 'admin',
     password: 'admin123'
@@ -40,19 +51,6 @@ function logout() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Preloader logic
-    if (!sessionStorage.getItem('firstLoad')) {
-        const preloader = document.querySelector('.preloader');
-        
-        setTimeout(() => {
-            preloader.classList.add('hidden');
-        }, 2000);
-        
-        sessionStorage.setItem('firstLoad', 'true');
-    } else {
-        document.querySelector('.preloader').classList.add('hidden');
-    }
-
     if (!checkAuth()) {
         showLoginPage();
     } else {
