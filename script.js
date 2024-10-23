@@ -1,7 +1,24 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Логика прелоадера
+    if (!sessionStorage.getItem('firstLoad')) {
+        const preloader = document.querySelector('.preloader');
+        
+        setTimeout(() => {
+            preloader.classList.add('hidden');
+        }, 2000);
+        
+        sessionStorage.setItem('firstLoad', 'true');
+    } else {
+        document.querySelector('.preloader').classList.add('hidden');
+    }
+
     // Управление боковой панелью
     const sidebarToggle = document.querySelector('.sidebar-toggle');
     const sidebar = document.querySelector('.sidebar');
+    const dashboard = document.querySelector('.dashboard');
+    const analyticsDashboard = document.querySelector('.analytics-dashboard');
+    const educationDashboard = document.querySelector('.education-dashboard');
+    const navLinks = document.querySelectorAll('.nav-links li');
     
     sidebarToggle.addEventListener('click', () => {
         sidebar.classList.toggle('active');
@@ -45,6 +62,41 @@ document.addEventListener('DOMContentLoaded', function() {
         icon.classList.add('fa-sun');
     }
 
+    // Навигация между разделами
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            navLinks.forEach(l => l.classList.remove('active'));
+            this.classList.add('active');
+
+            dashboard.style.display = 'none';
+            analyticsDashboard.style.display = 'none';
+            educationDashboard.style.display = 'none';
+
+            const section = this.querySelector('i').className;
+            
+            if (section.includes('fa-calculator')) {
+                dashboard.style.display = 'grid';
+            } else if (section.includes('fa-chart-line')) {
+                analyticsDashboard.style.display = 'block';
+            } else if (section.includes('fa-book')) {
+                educationDashboard.style.display = 'block';
+            }
+
+            if (window.innerWidth <= 1024) {
+                sidebar.classList.remove('active');
+            }
+        });
+    });
+
+    // Education buttons event listeners
+    const educationButtons = document.querySelectorAll('.education-btn');
+    educationButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const courseName = this.closest('.education-item').querySelector('h3').textContent;
+            showNotification(`Курс "${courseName}" скоро будет доступен`, 'info');
+        });
+    });
+
     // Переключение языка
     languageSelect.addEventListener('change', function() {
         currentLang = this.value;
@@ -54,11 +106,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updateLanguage() {
         const langData = window[currentLang];
+        if (!langData) return;
+        
         document.querySelectorAll('[data-lang]').forEach(element => {
-            const key = element.dataset.lang.split('.');
+            const keys = element.dataset.lang.split('.');
             let value = langData;
-            for (const k of key) {
-                value = value[k];
+            for (const key of keys) {
+                if (value) value = value[key];
             }
             if (value) element.textContent = value;
         });

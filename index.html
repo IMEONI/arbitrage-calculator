@@ -10,6 +10,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div class="preloader">
+        <div class="loader">
+            <svg viewBox="0 0 80 80">
+                <circle id="loader-circle" cx="40" cy="40" r="32"></circle>
+            </svg>
+            <div class="loader-text">ArbiCalc Pro</div>
+        </div>
+    </div>
+
     <nav class="sidebar">
         <div class="logo">
             <span data-lang="appName">ArbiCalc Pro</span>
@@ -27,11 +36,10 @@
                 <i class="fas fa-book"></i>
                 <span data-lang="nav.education">Обучение</span>
             </li>
-            <li>
-                <i class="fas fa-cog"></i>
-                <span data-lang="nav.settings">Настройки</span>
-            </li>
         </ul>
+        <div class="theme-toggle">
+            <i class="fas fa-moon theme-icon" id="themeToggle"></i>
+        </div>
     </nav>
 
     <main>
@@ -46,10 +54,6 @@
                 <option value="cn">🇨🇳 CN</option>
                 <option value="jp">🇯🇵 JP</option>
             </select>
-        </div>
-
-        <div class="theme-toggle">
-            <i class="fas fa-moon theme-icon" id="themeToggle"></i>
         </div>
 
         <div class="dashboard">
@@ -114,7 +118,6 @@
                     <div class="result-item">
                         <div class="result-icon roi tooltip">
                             <i class="fas fa-percentage"></i>
-                            <span class="tooltip-text" data-lang="results.
                             <span class="tooltip-text" data-lang="results.roiTooltip">Процент возврата инвестиций</span>
                         </div>
                         <div class="result-info">
@@ -152,6 +155,67 @@
                         <i class="fas fa-clock"></i>
                         <h3 data-lang="tips.timing">Тайминг</h3>
                         <p data-lang="tips.timingDesc">Выбирайте оптимальное время для сделок</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="analytics-dashboard" style="display: none;">
+            <section class="analytics-card">
+                <h2 data-lang="analytics.title">Аналитика</h2>
+                <div class="analytics-grid">
+                    <div class="analytics-chart">
+                        <div class="chart-placeholder">
+                            <i class="fas fa-chart-bar"></i>
+                            <p data-lang="analytics.comingSoon">Скоро здесь появится аналитика</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="education-dashboard" style="display: none;">
+            <section class="education-card">
+                <h2 data-lang="education.title">Обучение</h2>
+                <div class="education-grid">
+                    <div class="education-item">
+                        <div class="education-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="education-content">
+                            <h3 data-lang="education.basics.title">Основы арбитража</h3>
+                            <p data-lang="education.basics.description">Узнайте базовые принципы и стратегии арбитражной торговли</p>
+                            <button class="education-btn">
+                                <i class="fas fa-play"></i>
+                                <span data-lang="education.startLearning">Начать обучение</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="education-item">
+                        <div class="education-icon">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <div class="education-content">
+                            <h3 data-lang="education.market.title">Анализ рынков</h3>
+                            <p data-lang="education.market.description">Изучите методы анализа различных рынков и поиска возможностей</p>
+                            <button class="education-btn">
+                                <i class="fas fa-play"></i>
+                                <span data-lang="education.startLearning">Начать обучение</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="education-item">
+                        <div class="education-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div class="education-content">
+                            <h3 data-lang="education.advanced.title">Продвинутые стратегии</h3>
+                            <p data-lang="education.advanced.description">Освойте сложные стратегии и автоматизацию торговли</p>
+                            <button class="education-btn">
+                                <i class="fas fa-play"></i>
+                                <span data-lang="education.startLearning">Начать обучение</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </section>
