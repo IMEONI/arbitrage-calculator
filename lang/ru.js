@@ -70,6 +70,12 @@ const ru = {
             error: "Неверный логин или пароль",
             loggedOut: "Вы успешно вышли из системы"
         }
-    }
+    },
+
+
+    notifications: {
+    courseUnavailable: "Курс \"{courseName}\" скоро будет доступен"
+}
+
 };
 window.ru = ru;

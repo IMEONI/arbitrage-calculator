@@ -70,6 +70,12 @@ const cn = {
             error: "用户名或密码错误",
             loggedOut: "已成功退出"
         }
-    }
+    },
+
+
+    notifications: {
+    courseUnavailable: "课程 \"{courseName}\" 即将推出"
+}
+
 };
 window.cn = cn;

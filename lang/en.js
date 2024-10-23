@@ -70,6 +70,10 @@ const en = {
             error: "Invalid username or password",
             loggedOut: "Successfully logged out"
         }
-    }
+    },
+    notifications: {
+    courseUnavailable: "Course \"{courseName}\" will be available soon"
+}
+
 };
 window.en = en;

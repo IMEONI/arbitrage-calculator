@@ -70,6 +70,12 @@ const jp = {
             error: "ユーザー名またはパスワードが無効です",
             loggedOut: "ログアウトしました"
         }
-    }
+    },
+
+    notifications: {
+    courseUnavailable: "コース \"{courseName}\" は近日公開予定です"
+}
+
+
 };
 window.jp = jp;

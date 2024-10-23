@@ -1,14 +1,32 @@
+let isPageRefresh = window.performance.getEntriesByType('navigation')[0].type === 'reload';
+
 document.onreadystatechange = function() {
     const preloader = document.querySelector('.preloader');
+    const loginPage = document.querySelector('.login-page');
+    
+    if (isPageRefresh) {
+        preloader.style.display = 'none';
+        if (!checkAuth()) {
+            loginPage.style.display = 'flex';
+        }
+        return;
+    }
+
     if (document.readyState !== 'complete') {
         preloader.style.display = 'flex';
+        loginPage.style.display = 'none';
     } else {
         setTimeout(() => {
             preloader.classList.add('hidden');
+            if (!checkAuth()) {
+                loginPage.style.display = 'flex';
+            }
         }, 2000);
     }
 };
 
+
+// Rest of your existing code remains the same
 const TEST_CREDENTIALS = {
     username: 'admin',
     password: 'admin123'
@@ -19,8 +37,16 @@ function checkAuth() {
 }
 
 function showLoginPage() {
-    document.querySelector('.login-page').style.display = 'flex';
-    document.querySelector('.preloader').style.display = 'none';
+    const preloader = document.querySelector('.preloader');
+    if (!isPageRefresh) {
+        preloader.style.display = 'flex';
+        setTimeout(() => {
+            preloader.classList.add('hidden');
+            document.querySelector('.login-page').style.display = 'flex';
+        }, 2000);
+    } else {
+        document.querySelector('.login-page').style.display = 'flex';
+    }
 }
 
 function hideLoginPage() {
@@ -31,7 +57,17 @@ function login(username, password) {
     if (username === TEST_CREDENTIALS.username && password === TEST_CREDENTIALS.password) {
         localStorage.setItem('isAuthenticated', 'true');
         hideLoginPage();
-        document.querySelector('.dashboard').style.display = 'grid';
+        
+        const preloader = document.querySelector('.preloader');
+        if (!isPageRefresh) {
+            preloader.style.display = 'flex';
+            setTimeout(() => {
+                preloader.classList.add('hidden');
+                document.querySelector('.dashboard').style.display = 'grid';
+            }, 2000);
+        } else {
+            document.querySelector('.dashboard').style.display = 'grid';
+        }
         
         const navLinks = document.querySelectorAll('.nav-links li');
         navLinks.forEach(link => link.classList.remove('active'));
@@ -94,9 +130,21 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // Updated language handling
+    const languageSelects = document.querySelectorAll('.language-select');
     let currentLang = localStorage.getItem('language') || 'ru';
-    const languageSelect = document.getElementById('languageSelect');
-    languageSelect.value = currentLang;
+    
+    languageSelects.forEach(select => {
+        select.value = currentLang;
+        select.addEventListener('change', function() {
+            currentLang = this.value;
+            localStorage.setItem('language', currentLang);
+            languageSelects.forEach(otherSelect => {
+                otherSelect.value = currentLang;
+            });
+            updateLanguage();
+        });
+    });
 
     const currencySymbols = {
         'RUB': '₽',
@@ -150,15 +198,11 @@ document.addEventListener('DOMContentLoaded', function() {
     educationButtons.forEach(button => {
         button.addEventListener('click', function() {
             const courseName = this.closest('.education-item').querySelector('h3').textContent;
-            showNotification(`Курс "${courseName}" скоро будет доступен`, 'info');
+            const message = window[currentLang].notifications.courseUnavailable.replace('{courseName}', courseName);
+            showNotification(message, 'info');
         });
     });
-
-    languageSelect.addEventListener('change', function() {
-        currentLang = this.value;
-        localStorage.setItem('language', currentLang);
-        updateLanguage();
-    });
+    
 
     function updateLanguage() {
         const langData = window[currentLang];

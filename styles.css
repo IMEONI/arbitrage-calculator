@@ -684,7 +684,7 @@ body.dark-theme .education-content p {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 9999;
+    z-index: 10001;
     transition: opacity 0.5s, visibility 0.5s;
 }
 
