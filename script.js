@@ -21,7 +21,7 @@ document.onreadystatechange = function() {
             if (!checkAuth()) {
                 loginPage.style.display = 'flex';
             }
-        }, 2000);
+        }, 5000);
     }
 };
 
