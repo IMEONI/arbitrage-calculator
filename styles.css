@@ -734,10 +734,18 @@ body.dark-theme .preloader {
     align-items: center;
     z-index: 10000;
     transition: all 0.3s ease;
+    overflow: hidden;
 }
 
 body.dark-theme .login-page {
     background: var(--bg-dark);
+}
+
+body:has(.login-page[style*="display: flex"]) {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
 }
 
 .login-card {
