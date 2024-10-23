@@ -34,6 +34,7 @@ function login(username, password) {
 
 function logout() {
     localStorage.removeItem('isAuthenticated');
+    localStorage.removeItem('lastVisit');
     showLoginPage();
     showNotification('loggedOut', 'success');
 }
@@ -72,17 +73,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
     logoutButton.addEventListener('click', logout);
 
-    if (!sessionStorage.getItem('firstLoad')) {
-        const preloader = document.querySelector('.preloader');
-        
+    // New preloader logic
+    const lastVisit = localStorage.getItem('lastVisit');
+    const currentTime = new Date().getTime();
+    const preloader = document.querySelector('.preloader');
+
+    if (!lastVisit || (currentTime - parseInt(lastVisit)) > 5 * 1000) { // 5 seconds
         setTimeout(() => {
             preloader.classList.add('hidden');
         }, 2000);
-        
-        sessionStorage.setItem('firstLoad', 'true');
     } else {
-        document.querySelector('.preloader').classList.add('hidden');
+        preloader.classList.add('hidden');
     }
+
+    localStorage.setItem('lastVisit', currentTime);
     
     sidebarToggle.addEventListener('click', () => {
         sidebarElement.classList.toggle('active');
@@ -298,14 +302,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Add keyboard event listener for login form
     document.getElementById('loginPassword').addEventListener('keypress', function(e) {
         if (e.key === 'Enter') {
             document.getElementById('loginBtn').click();
         }
     });
 
-    // Initialize language on page load
     updateLanguage();
 });
-
