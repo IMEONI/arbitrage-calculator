@@ -774,140 +774,6 @@ body:has(.login-page[style*="display: flex"]) {
     height: 100%;
 }
 
-.admin-modal,
-.create-user-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 10002;
-}
-
-.modal-content {
-    background: var(--card-light);
-    border-radius: var(--radius-md);
-    padding: 3vh;
-    width: 90%;
-    max-width: 500px;
-    max-height: 80vh;
-    overflow-y: auto;
-}
-
-body.dark-theme .modal-content {
-    background: var(--card-dark);
-}
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2vh;
-}
-
-.close-modal {
-    cursor: pointer;
-    font-size: 2vh;
-    transition: all 0.3s ease;
-}
-
-.close-modal:hover {
-    color: var(--primary);
-}
-
-.users-container {
-    display: flex;
-    flex-direction: column;
-    gap: 1vh;
-}
-
-.user-item {
-    background: var(--bg-light);
-    padding: 2vh;
-    border-radius: var(--radius-sm);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-body.dark-theme .user-item {
-    background: var(--bg-dark);
-}
-
-.user-info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5vh;
-}
-
-.user-actions {
-    display: flex;
-    gap: 1vh;
-}
-
-.user-actions button {
-    padding: 1vh;
-    border-radius: var(--radius-sm);
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.ban-btn {
-    background: var(--warning);
-    color: white;
-}
-
-.delete-btn {
-    background: #ef4444;
-    color: white;
-}
-
-.styled-select {
-    width: 100%;
-    padding: 1.5vh;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border-light);
-    background: var(--bg-light);
-    color: var(--text-light);
-    margin-bottom: 2vh;
-}
-
-.duration-inputs {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1vh;
-    margin-bottom: 2vh;
-}
-
-.duration-inputs input {
-    padding: 1.5vh;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border-light);
-    background: var(--bg-light);
-    color: var(--text-light);
-}
-
-.create-account-btn {
-    width: 100%;
-    padding: 1.5vh;
-    background: var(--primary);
-    color: white;
-    border: none;
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.create-account-btn:hover {
-    background: var(--secondary);
-}
-
-
 .login-card {
     background: var(--card-light);
     border-radius: 2vw;
@@ -965,6 +831,226 @@ body.dark-theme .login-card {
     padding: 0.8vh 1.5vh;
 }
 
+
+.admin-controls {
+    margin-top: auto;
+    padding: 2vh;
+}
+
+.add-user-btn {
+    width: 100%;
+    padding: 1.5vh;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 1vw;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 1vh;
+    font-size: 1.6vh;
+    transition: all 0.3s ease;
+}
+
+.add-user-btn:hover {
+    background: var(--secondary);
+    transform: translateY(-0.2vh);
+}
+
+.add-user-btn i {
+    font-size: 1.8vh;
+}
+
+.admin-panel {
+    background: var(--card-light);
+    border-radius: 2vw;
+    padding: 4vh;
+    box-shadow: var(--shadow-light);
+    margin-top: 4vh;
+}
+
+.users-list {
+    display: grid;
+    gap: 2vh;
+}
+
+.user-card {
+    background: var(--bg-light);
+    border-radius: 1vw;
+    padding: 2vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.user-card {
+    background: var(--bg-light);
+    border-radius: 1vw;
+    padding: 2vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.user-info {
+    display: flex;
+    gap: 2vh;
+    align-items: center;
+}
+
+.user-status {
+    padding: 0.5vh 1vh;
+    border-radius: 0.5vw;
+    font-size: 1.4vh;
+}
+
+.user-status.active {
+    background: var(--success);
+    color: white;
+}
+
+.user-status.banned {
+    background: var(--warning);
+    color: white;
+}
+
+.user-expiry {
+    color: var(--text-secondary-light);
+    font-size: 1.4vh;
+}
+
+body.dark-theme .user-card {
+    background: var(--bg-dark);
+}
+
+
+.user-actions {
+    display: flex;
+    gap: 1vh;
+}
+
+.user-action-btn {
+    padding: 1vh 2vh;
+    border-radius: 0.5vw;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.user-action-btn.info {
+    background: var(--primary);
+    color: white;
+}
+
+.user-action-btn.ban {
+    background: var(--warning);
+    color: white;
+}
+
+.user-action-btn.delete {
+    background: #ef4444;
+    color: white;
+}
+
+.create-user-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--card-light);
+    padding: 4vh;
+    border-radius: 2vw;
+    box-shadow: var(--shadow-light);
+    z-index: 1000;
+    width: 90%;
+    max-width: 500px;
+}
+
+.duration-options {
+    display: grid;
+    gap: 2vh;
+    margin: 2vh 0;
+}
+
+.custom-duration {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1vh;
+}
+
+
+.modal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1001;
+}
+
+.modal-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+}
+
+.create-user-modal,
+.user-info-modal,
+.ban-modal {
+    position: relative;
+    background: var(--card-light);
+    padding: 4vh;
+    border-radius: 2vw;
+    box-shadow: var(--shadow-light);
+    width: 90%;
+    max-width: 500px;
+    z-index: 1002;
+}
+
+body.dark-theme .create-user-modal,
+body.dark-theme .user-info-modal,
+body.dark-theme .ban-modal {
+    background: var(--card-dark);
+    box-shadow: var(--shadow-dark);
+}
+
+.modal-actions {
+    display: flex;
+    gap: 2vh;
+    margin-top: 4vh;
+}
+
+.modal-btn {
+    padding: 1.5vh 3vh;
+    border-radius: 1vw;
+    border: none;
+    cursor: pointer;
+    font-size: 1.6vh;
+    transition: all 0.3s ease;
+}
+
+.modal-btn.create,
+.modal-btn.ban {
+    background: var(--primary);
+    color: white;
+}
+
+.modal-btn.cancel {
+    background: var(--text-secondary-light);
+    color: white;
+}
+
+.modal-btn:hover {
+    transform: translateY(-0.2vh);
+    opacity: 0.9;
+}
 
 
 @keyframes rotate {

@@ -80,6 +80,10 @@
                 <i class="fas fa-user-plus"></i>
                 <span data-lang="nav.addUser">+ Добавить пользователя</span>
             </button>
+            <button class="view-users-btn">
+                <i class="fas fa-users"></i>
+                <span data-lang="nav.viewUsers">Список пользователей</span>
+            </button>
         </div>
         <div class="theme-toggle">
             <i class="fas fa-moon theme-icon" id="themeToggle"></i>
@@ -264,55 +268,23 @@
                 </div>
             </section>
         </div>
+
+        <div class="admin-dashboard" style="display: none;">
+            <section class="admin-panel">
+                <h2>Управление пользователями</h2>
+                <div class="users-list">
+                    <!-- Users will be dynamically added here -->
+                </div>
+            </section>
+        </div>
+
     </main>
 
-    <div class="create-user-modal" style="display: none;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Создание пользователя</h3>
-                <i class="fas fa-times close-modal"></i>
-            </div>
-            <div class="create-user-form">
-                <div class="input-group">
-                    <label>Срок действия аккаунта</label>
-                    <select id="accountDuration" class="styled-select">
-                        <option value="1h">1 час</option>
-                        <option value="24h">24 часа</option>
-                        <option value="custom">Своё время</option>
-                    </select>
-                </div>
-                <div id="customDuration" style="display: none;">
-                    <div class="duration-inputs">
-                        <input type="number" id="years" placeholder="Годы" min="0">
-                        <input type="number" id="hours" placeholder="Часы" min="0">
-                        <input type="number" id="minutes" placeholder="Минуты" min="0">
-                        <input type="number" id="seconds" placeholder="Секунды" min="0">
-                    </div>
-                </div>
-                <button class="create-account-btn">Создать аккаунт</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-firestore.js"></script>
-    <script src="firebase-config.js"></script>
     <script src="lang/ru.js"></script>
     <script src="lang/en.js"></script>
     <script src="lang/cn.js"></script>
     <script src="lang/jp.js"></script>
+    <script src="admin.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
-
-
-    <script src="lang/ru.js"></script>
-    <script src="lang/en.js"></script>
-    <script src="lang/cn.js"></script>
-    <script src="lang/jp.js"></script>
-    <script src="script.js"></script>
-</body>
-</html>
-

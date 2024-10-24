@@ -5,7 +5,8 @@ const ru = {
         analytics: "Аналитика", 
         education: "Обучение",
         logout: "Выход",
-        addUser: "+ Добавить пользователя"
+        addUser: "+ Добавить пользователя",
+        viewUsers: "Список пользователей"
     },
     
     calculator: {
@@ -16,6 +17,7 @@ const ru = {
         sellPrice: "Цена продажи",
         calculate: "Рассчитать"
     },
+
     currency: {
         RUB: "RUB - Российский рубль",
         USD: "USD - Доллар США",
@@ -24,6 +26,7 @@ const ru = {
         CNY: "CNY - Китайский юань",
         JPY: "JPY - Японская иена"
     },
+
     results: {
         title: "Результаты",
         profit: "Прибыль",
@@ -32,6 +35,7 @@ const ru = {
         units: "Количество",
         unitsTooltip: "Количество единиц товара"
     },
+
     tips: {
         title: "Советы по арбитражу",
         marketAnalysis: "Анализ рынка",
@@ -41,10 +45,12 @@ const ru = {
         timing: "Тайминг",
         timingDesc: "Выбирайте оптимальное время для сделок"
     },
+
     analytics: {
         title: "Аналитика",
         comingSoon: "Скоро здесь появится аналитика"
     },
+
     education: {
         title: "Обучение",
         basics: {
@@ -61,6 +67,7 @@ const ru = {
         },
         startLearning: "Начать обучение"
     },
+
     login: {
         title: "Вход",
         username: "Логин",
@@ -74,10 +81,54 @@ const ru = {
         }
     },
 
+    admin: {
+        userManagement: "Управление пользователями",
+        createUser: {
+            title: "Создание нового пользователя",
+            duration: "Длительность доступа",
+            oneHour: "1 час",
+            twentyFourHours: "24 часа",
+            custom: "Своё время",
+            years: "Годы",
+            hours: "Часы",
+            minutes: "Минуты",
+            seconds: "Секунды",
+            create: "Создать",
+            cancel: "Отмена"
+        },
+        userInfo: {
+            title: "Информация о пользователе",
+            username: "Логин",
+            status: "Статус",
+            created: "Создан",
+            expires: "Доступ до",
+            close: "Закрыть"
+        },
+        ban: {
+            title: "Бан пользователя",
+            reason: "Причина бана",
+            duration: "Длительность бана",
+            banBtn: "Забанить",
+            cancel: "Отмена"
+        },
+        delete: {
+            confirm: "Вы уверены, что хотите удалить этого пользователя?",
+            success: "Пользователь удален"
+        },
+        notifications: {
+            userCreated: "Новый пользователь создан",
+            userBanned: "Пользователь забанен",
+            selectDuration: "Выберите длительность доступа",
+            enterTime: "Укажите время доступа",
+            enterBanReason: "Укажите причину бана",
+            selectBanDuration: "Выберите длительность бана",
+            enterBanTime: "Укажите время бана"
+        }
+    },
 
     notifications: {
-    courseUnavailable: "Курс \"{courseName}\" скоро будет доступен"
-}
-
+        courseUnavailable: "Курс \"{courseName}\" скоро будет доступен"
+    }
 };
+
 window.ru = ru;
