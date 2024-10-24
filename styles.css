@@ -774,6 +774,140 @@ body:has(.login-page[style*="display: flex"]) {
     height: 100%;
 }
 
+.admin-modal,
+.create-user-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10002;
+}
+
+.modal-content {
+    background: var(--card-light);
+    border-radius: var(--radius-md);
+    padding: 3vh;
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+body.dark-theme .modal-content {
+    background: var(--card-dark);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2vh;
+}
+
+.close-modal {
+    cursor: pointer;
+    font-size: 2vh;
+    transition: all 0.3s ease;
+}
+
+.close-modal:hover {
+    color: var(--primary);
+}
+
+.users-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+}
+
+.user-item {
+    background: var(--bg-light);
+    padding: 2vh;
+    border-radius: var(--radius-sm);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+body.dark-theme .user-item {
+    background: var(--bg-dark);
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5vh;
+}
+
+.user-actions {
+    display: flex;
+    gap: 1vh;
+}
+
+.user-actions button {
+    padding: 1vh;
+    border-radius: var(--radius-sm);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.ban-btn {
+    background: var(--warning);
+    color: white;
+}
+
+.delete-btn {
+    background: #ef4444;
+    color: white;
+}
+
+.styled-select {
+    width: 100%;
+    padding: 1.5vh;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-light);
+    background: var(--bg-light);
+    color: var(--text-light);
+    margin-bottom: 2vh;
+}
+
+.duration-inputs {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1vh;
+    margin-bottom: 2vh;
+}
+
+.duration-inputs input {
+    padding: 1.5vh;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-light);
+    background: var(--bg-light);
+    color: var(--text-light);
+}
+
+.create-account-btn {
+    width: 100%;
+    padding: 1.5vh;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.create-account-btn:hover {
+    background: var(--secondary);
+}
+
+
 .login-card {
     background: var(--card-light);
     border-radius: 2vw;
@@ -830,6 +964,8 @@ body.dark-theme .login-card {
 .login-language-select .language-select {
     padding: 0.8vh 1.5vh;
 }
+
+
 
 @keyframes rotate {
     100% { transform: rotate(360deg); }

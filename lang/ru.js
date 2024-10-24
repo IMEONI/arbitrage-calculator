@@ -2,10 +2,12 @@ const ru = {
     appName: "ArbiCalc Pro",
     nav: {
         calculator: "Калькулятор",
-        analytics: "Аналитика",
+        analytics: "Аналитика", 
         education: "Обучение",
-        logout: "Выход"
+        logout: "Выход",
+        addUser: "+ Добавить пользователя"
     },
+    
     calculator: {
         title: "Калькулятор арбитража",
         currency: "Валюта",

@@ -4,8 +4,10 @@ const jp = {
         calculator: "計算機",
         analytics: "分析",
         education: "教育",
-        logout: "ログアウト"
+        logout: "ログアウト",
+        addUser: "+ ユーザーを追加"
     },
+    
     calculator: {
         title: "アービトレージ計算機",
         currency: "通貨",

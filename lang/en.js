@@ -4,8 +4,10 @@ const en = {
         calculator: "Calculator",
         analytics: "Analytics", 
         education: "Education",
-        logout: "Logout"
+        logout: "Logout",
+        addUser: "+ Add User"
     },
+    
     calculator: {
         title: "Arbitrage Calculator",
         currency: "Currency",

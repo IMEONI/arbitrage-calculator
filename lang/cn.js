@@ -4,8 +4,10 @@ const cn = {
         calculator: "计算器",
         analytics: "分析",
         education: "教育",
-        logout: "退出"
+        logout: "退出",
+        addUser: "+ 添加用户"
     },
+    
     calculator: {
         title: "套利计算器",
         currency: "货币",

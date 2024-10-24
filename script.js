@@ -51,10 +51,30 @@ function hideLoginPage() {
     document.querySelector('.login-page').style.display = 'none';
 }
 
+function showAdminControls() {
+    const adminControls = document.querySelector('.admin-controls');
+    const username = localStorage.getItem('username');
+    if (username === TEST_CREDENTIALS.username) {
+        adminControls.style.display = 'block';
+    } else {
+        adminControls.style.display = 'none';
+    }
+}
+
+function generateCredentials() {
+    const randomString = Math.random().toString(36).substring(2, 10);
+    return {
+        username: `user_${randomString}`,
+        password: `pass_${randomString}`
+    };
+}
+
 function login(username, password) {
     if (username === TEST_CREDENTIALS.username && password === TEST_CREDENTIALS.password) {
         localStorage.setItem('isAuthenticated', 'true');
+        localStorage.setItem('username', username);
         hideLoginPage();
+        showAdminControls();
         
         const preloader = document.querySelector('.preloader');
         if (!isPageRefresh) {
@@ -79,16 +99,20 @@ function login(username, password) {
 
 function logout() {
     localStorage.removeItem('isAuthenticated');
+    localStorage.removeItem('username');
     sessionStorage.clear();
     showLoginPage();
     showNotification('loggedOut', 'success');
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+    const db = firebase.firestore();
+    
     if (!checkAuth()) {
         showLoginPage();
     } else {
         hideLoginPage();
+        showAdminControls();
     }
 
     document.getElementById('loginBtn').addEventListener('click', function() {
@@ -106,6 +130,174 @@ document.addEventListener('DOMContentLoaded', function() {
             showNotification('error', 'error');
         }
     });
+
+    const addUserBtn = document.querySelector('.add-user-btn');
+    const adminModal = document.querySelector('.admin-modal');
+    const createUserModal = document.querySelector('.create-user-modal');
+    const closeModals = document.querySelectorAll('.close-modal');
+    const accountDuration = document.getElementById('accountDuration');
+    const customDuration = document.getElementById('customDuration');
+
+    addUserBtn.addEventListener('click', () => {
+        createUserModal.style.display = 'flex';
+    });
+
+    closeModals.forEach(btn => {
+        btn.addEventListener('click', () => {
+            adminModal.style.display = 'none';
+            createUserModal.style.display = 'none';
+        });
+    });
+
+    accountDuration.addEventListener('change', (e) => {
+        customDuration.style.display = e.target.value === 'custom' ? 'block' : 'none';
+    });
+
+    document.querySelector('.create-account-btn').addEventListener('click', async () => {
+        const duration = accountDuration.value;
+        let expiryDate = new Date();
+        
+        if (duration === 'custom') {
+            const years = parseInt(document.getElementById('years').value) || 0;
+            const hours = parseInt(document.getElementById('hours').value) || 0;
+            const minutes = parseInt(document.getElementById('minutes').value) || 0;
+            const seconds = parseInt(document.getElementById('seconds').value) || 0;
+            
+            expiryDate.setFullYear(expiryDate.getFullYear() + years);
+            expiryDate.setHours(expiryDate.getHours() + hours);
+            expiryDate.setMinutes(expiryDate.getMinutes() + minutes);
+            expiryDate.setSeconds(expiryDate.getSeconds() + seconds);
+        } else {
+            const hours = duration === '1h' ? 1 : 24;
+            expiryDate.setHours(expiryDate.getHours() + hours);
+        }
+        
+        const newCredentials = generateCredentials();
+        const newUser = {
+            username: newCredentials.username,
+            password: newCredentials.password,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            expiryDate: expiryDate.toISOString(),
+            banned: false,
+            banReason: '',
+            banExpiry: null
+        };
+        
+        try {
+            await db.collection('users').add(newUser);
+            showNotification(`
+                <div class="notification-content">
+                    <div class="notification-title">Создан новый аккаунт!</div>
+                    <div class="notification-details">
+                        <div>Логин: ${newUser.username}</div>
+                        <div>Пароль: ${newUser.password}</div>
+                        <div>Действует до: ${new Date(expiryDate).toLocaleString()}</div>
+                    </div>
+                </div>
+            `, 'success');
+            createUserModal.style.display = 'none';
+            await showUsersList();
+        } catch (error) {
+            showNotification('Ошибка при создании пользователя', 'error');
+        }
+    });
+
+    async function showUsersList() {
+        const usersContainer = document.querySelector('.users-container');
+        usersContainer.innerHTML = '';
+        
+        const snapshot = await db.collection('users').get();
+        const users = snapshot.docs.map(doc => ({id: doc.id, ...doc.data()}));
+        
+        users.forEach(user => {
+            const userElement = document.createElement('div');
+            userElement.className = `user-item ${user.banned ? 'banned' : ''}`;
+            userElement.innerHTML = `
+                <div class="user-info">
+                    <div class="user-name">${user.username}</div>
+                    <div class="user-expiry">До: ${new Date(user.expiryDate).toLocaleString()}</div>
+                    ${user.banned ? `
+                        <div class="user-ban-info">
+                            <div>Бан до: ${new Date(user.banExpiry).toLocaleString()}</div>
+                            <div>Причина: ${user.banReason}</div>
+                        </div>
+                    ` : ''}
+                </div>
+                <div class="user-actions">
+                    <button class="info-btn" onclick="showUserInfo('${user.id}')">
+                        <i class="fas fa-info-circle"></i>
+                    </button>
+                    <button class="ban-btn" onclick="banUser('${user.id}')">
+                        <i class="fas fa-ban"></i>
+                    </button>
+                    <button class="delete-btn" onclick="deleteUser('${user.id}')">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `;
+            usersContainer.appendChild(userElement);
+        });
+    }
+
+    window.banUser = async function(userId) {
+        const reason = prompt('Укажите причину бана:');
+        if (!reason) return;
+        
+        const duration = prompt('Укажите срок бана (в часах):', '24');
+        if (!duration) return;
+        
+        const banExpiry = new Date();
+        banExpiry.setHours(banExpiry.getHours() + parseInt(duration));
+        
+        try {
+            await db.collection('users').doc(userId).update({
+                banned: true,
+                banReason: reason,
+                banExpiry: banExpiry.toISOString()
+            });
+            showNotification('Пользователь забанен', 'warning');
+            await showUsersList();
+        } catch (error) {
+            showNotification('Ошибка при бане пользователя', 'error');
+        }
+    };
+
+    window.deleteUser = async function(userId) {
+        if (confirm('Вы уверены, что хотите удалить этого пользователя?')) {
+            try {
+                await db.collection('users').doc(userId).delete();
+                showNotification('Пользователь удален', 'success');
+                await showUsersList();
+            } catch (error) {
+                showNotification('Ошибка при удалении пользователя', 'error');
+            }
+        }
+    };
+
+    window.showUserInfo = async function(userId) {
+        try {
+            const doc = await db.collection('users').doc(userId).get();
+            const user = doc.data();
+            
+            const infoHTML = `
+                <div class="user-details">
+                    <h4>Информация о пользователе</h4>
+                    <p>Логин: ${user.username}</p>
+                    <p>Создан: ${new Date(user.createdAt.toDate()).toLocaleString()}</p>
+                    <p>Действует до: ${new Date(user.expiryDate).toLocaleString()}</p>
+                    ${user.banned ? `
+                        <p>Статус: Забанен</p>
+                        <p>Причина бана: ${user.banReason}</p>
+                        <p>Бан до: ${new Date(user.banExpiry).toLocaleString()}</p>
+                    ` : '<p>Статус: Активен</p>'}
+                </div>
+            `;
+            
+            showNotification(infoHTML, 'info', 10000);
+        } catch (error) {
+            showNotification('Ошибка при получении информации', 'error');
+        }
+    };
 
     const sidebarNav = document.querySelector('.nav-links');
     const sidebarElement = document.querySelector('.sidebar');
@@ -160,8 +352,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const icon = themeToggle;
     
     const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        document.body.classList.add('dark-theme');
+    if (savedTheme === 'dark') {        document.body.classList.add('dark-theme');
         icon.classList.remove('fa-moon');
         icon.classList.add('fa-sun');
     }
@@ -204,7 +395,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const langData = window[currentLang];
         if (!langData) return;
         
-        // Simple language code display
         languageSelects.forEach(select => {
             Array.from(select.options).forEach(option => {
                 option.textContent = option.value.toUpperCase();
@@ -311,9 +501,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 150);
     }
 
-    function showNotification(messageKey, type = 'error') {
+    function showNotification(messageKey, type = 'error', duration = 3000) {
         const langData = window[currentLang];
-        const message = langData.login.notifications[messageKey] || messageKey;
+        const message = langData?.login?.notifications?.[messageKey] || messageKey;
         
         const notification = document.createElement('div');
         notification.className = `notification ${type}`;
@@ -327,7 +517,7 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => {
             notification.classList.remove('show');
             setTimeout(() => notification.remove(), 300);
-        }, 3000);
+        }, duration);
     }
 
     const numberInputs = document.querySelectorAll('input[type="number"]');
@@ -351,5 +541,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    if (localStorage.getItem('username') === TEST_CREDENTIALS.username) {
+        document.querySelector('.admin-controls').style.display = 'block';
+        showUsersList();
+    }
+
     updateLanguage();
 });
+
