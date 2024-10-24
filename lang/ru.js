@@ -8,7 +8,6 @@ const ru = {
         addUser: "+ Добавить пользователя",
         viewUsers: "Список пользователей"
     },
-    
     calculator: {
         title: "Калькулятор арбитража",
         currency: "Валюта",
@@ -17,7 +16,6 @@ const ru = {
         sellPrice: "Цена продажи",
         calculate: "Рассчитать"
     },
-
     currency: {
         RUB: "RUB - Российский рубль",
         USD: "USD - Доллар США",
@@ -26,7 +24,6 @@ const ru = {
         CNY: "CNY - Китайский юань",
         JPY: "JPY - Японская иена"
     },
-
     results: {
         title: "Результаты",
         profit: "Прибыль",
@@ -35,7 +32,6 @@ const ru = {
         units: "Количество",
         unitsTooltip: "Количество единиц товара"
     },
-
     tips: {
         title: "Советы по арбитражу",
         marketAnalysis: "Анализ рынка",
@@ -45,12 +41,10 @@ const ru = {
         timing: "Тайминг",
         timingDesc: "Выбирайте оптимальное время для сделок"
     },
-
     analytics: {
         title: "Аналитика",
         comingSoon: "Скоро здесь появится аналитика"
     },
-
     education: {
         title: "Обучение",
         basics: {
@@ -67,7 +61,6 @@ const ru = {
         },
         startLearning: "Начать обучение"
     },
-
     login: {
         title: "Вход",
         username: "Логин",
@@ -80,7 +73,6 @@ const ru = {
             loggedOut: "Вы успешно вышли из системы"
         }
     },
-
     admin: {
         userManagement: "Управление пользователями",
         createUser: {
@@ -111,13 +103,14 @@ const ru = {
             banBtn: "Забанить",
             cancel: "Отмена"
         },
-        delete: {
-            confirm: "Вы уверены, что хотите удалить этого пользователя?",
-            success: "Пользователь удален"
-        },
         notifications: {
-            userCreated: "Новый пользователь создан",
+            userCreated: "Новый пользователь создан успешно!",
+            userCreatedDetails: `Новый пользователь создан!
+Логин: {username}
+Пароль: {password}
+Доступ до: {expires}`,
             userBanned: "Пользователь забанен",
+            userDeleted: "Пользователь удален",
             selectDuration: "Выберите длительность доступа",
             enterTime: "Укажите время доступа",
             enterBanReason: "Укажите причину бана",
@@ -125,7 +118,6 @@ const ru = {
             enterBanTime: "Укажите время бана"
         }
     },
-
     notifications: {
         courseUnavailable: "Курс \"{courseName}\" скоро будет доступен"
     }

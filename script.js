@@ -173,36 +173,66 @@ function showCreateUserModal() {
             showNotification('Выберите длительность доступа', 'error');
             return;
         }
-
+    
         let duration = {
             type: selectedDuration.value
         };
-
+    
         if (duration.type === 'custom') {
             duration.years = parseInt(modal.querySelector('#years').value) || 0;
             duration.hours = parseInt(modal.querySelector('#hours').value) || 0;
             duration.minutes = parseInt(modal.querySelector('#minutes').value) || 0;
             duration.seconds = parseInt(modal.querySelector('#seconds').value) || 0;
-
+    
             if (duration.years + duration.hours + duration.minutes + duration.seconds === 0) {
                 showNotification('Укажите время доступа', 'error');
                 return;
             }
         }
-
+    
         const credentials = generateCredentials();
         const user = userManager.createUser(credentials.username, credentials.password, duration);
         
-        showNotification(`
-            Новый пользователь создан!<br>
-            Логин: ${credentials.username}<br>
-            Пароль: ${credentials.password}<br>
-            Доступ до: ${new Date(user.expiresAt).toLocaleString()}
-        `, 'success', 10000);
-
         modal.remove();
+        
+        const message = window[currentLang].admin.notifications.userCreatedDetails
+            .replace('{username}', credentials.username)
+            .replace('{password}', credentials.password)
+            .replace('{expires}', new Date(user.expiresAt).toLocaleString());
+        
+        showNotification(message, 'success', 10000);
         loadAdminPanel();
+        
     });
+
+    function showNotification(messageKey, type = 'error', duration = 3000) {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        
+        // Получаем текст уведомления из языкового файла
+        let message = messageKey;
+        if (window[currentLang]?.admin?.notifications?.[messageKey]) {
+            message = window[currentLang].admin.notifications[messageKey];
+        } else if (window[currentLang]?.login?.notifications?.[messageKey]) {
+            message = window[currentLang].login.notifications[messageKey];
+        }
+        
+        notification.innerHTML = `
+            <i class="fas ${type === 'error' ? 'fa-exclamation-circle' : 'fa-check-circle'}"></i>
+            <span>${message}</span>
+        `;
+        
+        const container = document.querySelector('.notification-container');
+        container.appendChild(notification);
+    
+        setTimeout(() => notification.classList.add('show'), 100);
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => notification.remove(), 300);
+        }, duration);
+    }
+    
+    
 }
 
 function showUserInfo(user) {

@@ -5,7 +5,8 @@ const en = {
         analytics: "Analytics", 
         education: "Education",
         logout: "Logout",
-        addUser: "+ Add User"
+        addUser: "+ Add User",
+        viewUsers: "Users List"
     },
     
     calculator: {
@@ -73,9 +74,54 @@ const en = {
             loggedOut: "Successfully logged out"
         }
     },
+    admin: {
+        userManagement: "User Management",
+        createUser: {
+            title: "Create New User",
+            duration: "Access Duration",
+            oneHour: "1 hour",
+            twentyFourHours: "24 hours",
+            custom: "Custom time",
+            years: "Years",
+            hours: "Hours",
+            minutes: "Minutes",
+            seconds: "Seconds",
+            create: "Create",
+            cancel: "Cancel"
+        },
+        userInfo: {
+            title: "User Information",
+            username: "Username",
+            status: "Status",
+            created: "Created",
+            expires: "Expires",
+            close: "Close"
+        },
+        ban: {
+            title: "Ban User",
+            reason: "Ban Reason",
+            duration: "Ban Duration",
+            banBtn: "Ban",
+            cancel: "Cancel"
+        },
+        notifications: {
+            userCreated: "New user created successfully!",
+            userCreatedDetails: `New user created!
+Login: {username}
+Password: {password}
+Access until: {expires}`,
+            userBanned: "User banned",
+            userDeleted: "User deleted",
+            selectDuration: "Select access duration",
+            enterTime: "Enter access time",
+            enterBanReason: "Enter ban reason",
+            selectBanDuration: "Select ban duration",
+            enterBanTime: "Enter ban time"
+        }
+    },
     notifications: {
-    courseUnavailable: "Course \"{courseName}\" will be available soon"
-}
-
+        courseUnavailable: "Course \"{courseName}\" will be available soon"
+    }
 };
+
 window.en = en;

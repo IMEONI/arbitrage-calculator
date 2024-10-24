@@ -5,9 +5,9 @@ const cn = {
         analytics: "分析",
         education: "教育",
         logout: "退出",
-        addUser: "+ 添加用户"
+        addUser: "+ 添加用户",
+        viewUsers: "用户列表"
     },
-    
     calculator: {
         title: "套利计算器",
         currency: "货币",
@@ -73,11 +73,55 @@ const cn = {
             loggedOut: "已成功退出"
         }
     },
-
-
+    admin: {
+        userManagement: "用户管理",
+        createUser: {
+            title: "创建新用户",
+            duration: "访问时长",
+            oneHour: "1小时",
+            twentyFourHours: "24小时",
+            custom: "自定义时间",
+            years: "年",
+            hours: "小时",
+            minutes: "分钟",
+            seconds: "秒",
+            create: "创建",
+            cancel: "取消"
+        },
+        userInfo: {
+            title: "用户信息",
+            username: "用户名",
+            status: "状态",
+            created: "创建时间",
+            expires: "到期时间",
+            close: "关闭"
+        },
+        ban: {
+            title: "封禁用户",
+            reason: "封禁原因",
+            duration: "封禁时长",
+            banBtn: "封禁",
+            cancel: "取消"
+        },
+        notifications: {
+            userCreated: "新用户创建成功！",
+            userCreatedDetails: `新用户已创建！
+登录名: {username}
+密码: {password}
+访问期限: {expires}`,
+            userBanned: "用户已被封禁",
+            userDeleted: "用户已删除",
+            selectDuration: "请选择访问时长",
+            enterTime: "请输入访问时间",
+            enterBanReason: "请输入封禁原因",
+            selectBanDuration: "请选择封禁时长",
+            enterBanTime: "请输入封禁时间"
+        }
+    },
     notifications: {
-    courseUnavailable: "课程 \"{courseName}\" 即将推出"
-}
+        courseUnavailable: "课程 \"{courseName}\" 即将推出"
+    }
+    
+    };
 
-};
 window.cn = cn;
